@@ -9,7 +9,7 @@ The model combines a learned count-fingerprint baseline with a local, regularize
 Install Python with PyTorch, RDKit, NumPy, SciPy, and scikit-learn. Obtain the corrected [MoleculeACE v3.0.0 release](https://github.com/molML/MoleculeACE/releases/tag/v3.0.0) separately. Supply one CSV per task named `<dataset>.csv` with `smiles`, `split` (`train`/`test`), and either `exp_mean [nM]` or `y [pEC50/pKi]`. The runner reads **training rows only**; it neither reads test activities nor computes published test metrics.
 
 ```bash
-python train.py --data /path/to/moleculeace-v3-csvs --output /path/to/new-output --datasets CHEMBL2034_Ki --seeds 0 1 2 3 4 --device cuda
+python train.py --data /path/to/moleculeace-v3-csvs --output /path/to/new-output --datasets CHEMBL2034_Ki --seeds 0 1 2 3 4
 ```
 
 For every seed, the runner uses the immutable official train split, a 10% validation split with split seed 0, at most 100 epochs, batch size 128, AdamW learning rate 1e-4 and weight decay 1e-5, patience 15, and validation overall RMSE for checkpoint selection. It writes model checkpoints, a split/reference-index manifest, configuration, and history **only to the chosen local output directory**. It refuses to overwrite an existing nonempty run directory.

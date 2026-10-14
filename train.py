@@ -184,12 +184,11 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--datasets", nargs="+", required=True)
     parser.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2, 3, 4])
-    parser.add_argument("--device", choices=["cuda", "cpu"], default="cuda")
     args = parser.parse_args()
     if any(seed not in range(5) for seed in args.seeds):
         parser.error("Seeds must be 0–4")
-    device = torch.device(args.device)
-    if device.type == "cuda" and not torch.cuda.is_available():
+    device = torch.device("cuda")
+    if not torch.cuda.is_available():
         parser.error("CUDA is unavailable")
     for dataset in args.datasets:
         for seed in args.seeds:
